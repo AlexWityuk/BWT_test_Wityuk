@@ -8,11 +8,9 @@ error_reporting(E_ALL);
 
 //2. Подключение файлов системы
 define('ROOT', dirname(__FILE__));
-require_once (ROOT.'/components/Router.php');
-//Class Db
-require_once (ROOT.'/components/Db.php');
-//echo ROOT; //Путь к файлу index.php
+define('DS', DIRECTORY_SEPARATOR);
 
-//4  Вызов Router
-$router = new Router();
+require_once (ROOT . DS . 'autoload.php');
+
+$router = new components\Router();
 $router->run();
