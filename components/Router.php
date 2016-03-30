@@ -1,12 +1,18 @@
 <?php
+namespace components;
 
 class Router {
     
     private $routes;
     
     function __construct() {
-        $routesPath = ROOT.'/config/routes.php';
-        $this->routes = include ($routesPath);
+        $this->routes = array(
+            'main/form' => 'main/Form',//actionForm в MainController
+            'main/pogodazp' => 'main/Pogodazp',//actionPogodazp в MainController
+            'main/feedback' => 'main/Feedback',//actionFeedback в MainController
+            'main/feedbacklist' => 'main/Feedbacklist',//actionFeedbacklist в MainController
+            'main' => 'main/Index' //action index в MainController
+        );
     }
     
     private function getURI(){
@@ -27,7 +33,6 @@ class Router {
         foreach ($this->routes as $uriPattern => $path){
 
             if (preg_match("~$uriPattern~", $uri)) {
-                //echo '+';
                 
                 //Если есть совпадение, 
                 //определить какой контролер
@@ -46,22 +51,19 @@ class Router {
                 $controllerName = ucfirst($controllerName);
                 //echo $controllerName;
                 
-                $actionName = 'action'.ucfirst(array_shift($segments));
-                //echo $actionName;
-                
-                //echo '<br>Класс:'.$controllerName;
-                //echo '<br>Метод:'.$actionName;
+                $actionName = 'action'.ucfirst(array_shift($segments));;
 
                 //Подключить файл класса-контроллера
                 $controllerFile = ROOT.'/controllers/'.$controllerName.'.php';
 
                 if (file_exists($controllerFile)) {
-                    include_once ($controllerFile);
+                    //Создать объект, вызвать метод (т.е. action)
+                    $controllerObject =  new \controllers\MainController;
                 }
-                
-                //Создать объект, вызвать метод (т.е. action)
-                $controllerObject = new $controllerName;
-                
+                  
+                //$controllerObject = new $controllerName();
+                //echo $controllerName;
+
                 $result = $controllerObject->$actionName();
                 
                 if ($result!=null) {

@@ -1,16 +1,14 @@
 <?php
-
-include_once ROOT.'/models/Model.php';
-include_once ROOT.'/models/User.php';
+namespace controllers;
+use models\Model;
+use models\User;
+//include_once ROOT.'/models/Model.php';
+//include_once ROOT.'/models/User.php';
 
 class MainController {
-
-    public function actionIndex(){
-        require_once (ROOT.'/views/index.php');
-        return true;
-    }
     
     public function actionForm(){
+
         if(!isset($_SESSION)) 
         { 
             session_start(); 
@@ -23,30 +21,30 @@ class MainController {
 	$valid_usersex = '';
 	if(isset($_POST['submit']))
 	{
-		$firstName = trim($_REQUEST['firstName']);
-		$lastName = trim($_REQUEST['lastName']);
-		$email = trim($_REQUEST['email']);
-		$usersex = trim($_REQUEST['usersex']);
-		$dateofbirth = trim($_REQUEST['dateofbirth']);
-		//$nc = strip_tags($nc);
+            $firstName = trim($_REQUEST['firstName']);
+            $lastName = trim($_REQUEST['lastName']);
+            $email = trim($_REQUEST['email']);
+            $usersex = trim($_REQUEST['usersex']);
+            $dateofbirth = trim($_REQUEST['dateofbirth']);
+            //$nc = strip_tags($nc);
 
-		if(empty($firstName))
-			//echo"Указать имя, фамилию и email";
-		//print "<font color=\"red\">* Указать имя, фамилию и email</font> <br>";
-			$valid_firstName = 'error';
-		//Валидация e-mail адреса, используя функцию filter_var()
-		if(empty($lastName)) $valid_lastName = 'error';
+            if(empty($firstName))
+            //echo"Указать имя, фамилию и email";
+            //print "<font color=\"red\">* Указать имя, фамилию и email</font> <br>";
+            $valid_firstName = 'error';
+            //Валидация e-mail адреса, используя функцию filter_var()
+            if(empty($lastName)) $valid_lastName = 'error';
 
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    		//echo "E-mail указан неверно.<br>";
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                //echo "E-mail указан неверно.<br>";
     		$valid_email = 'error';
-		}
+            }
                 
-                Model::insertIntoClientTableDB($firstName,$lastName,$email,$usersex,$dateofbirth);
-		// Если корректны, устанавливаем значение сессии в YES
-		// Инициируем сессию
+            Model::insertIntoClientTableDB($firstName,$lastName,$email,$usersex,$dateofbirth);
+            // Если корректны, устанавливаем значение сессии в YES
+            // Инициируем сессию
   		
-	  	$_SESSION["Login"] = "YES";
+            $_SESSION["Login"] = "YES";
 		
 	}
         require_once (ROOT.'/views/form.php');

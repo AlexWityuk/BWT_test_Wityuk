@@ -1,16 +1,10 @@
 <?php
+namespace models;
+use \components\Db;
 
 class Model {
     
     public static function getFeedbackList(){
-        // Соединение с БД
-        /*$db = Db::getConnection();
-        //Запрос в БД
-        $sql = "SELECT * FROM Feedback";
-        // Получение и возврат результатов. Используется подготовленный запрос
-        $result = $db->prepare($sql);
-        $result->execute();
-        return $result;*/
         
                 // Соединение с БД
         $db = Db::getConnection();
@@ -23,7 +17,7 @@ class Model {
         //$result->bindParam(':count', $count, PDO::PARAM_INT);
 
         // Указываем, что хотим получить данные в виде массива
-        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->setFetchMode(\PDO::FETCH_ASSOC);
         
         // Выполнение коменды
         $result->execute();
@@ -55,10 +49,10 @@ class Model {
     		VALUES (:Name, :EmailForm, :Message, :date)";
         // Получение и возврат результатов. Используется подготовленный запрос
         $result = $db->prepare($sql);
-        $result->bindParam(':Name', $name, PDO::PARAM_STR);
-        $result->bindParam(':EmailForm', $emailFrom, PDO::PARAM_STR);
-        $result->bindParam(':Message', $comments, PDO::PARAM_STR);
-        $result->bindParam(':date', $dateNaw, PDO::PARAM_STR);
+        $result->bindParam(':Name', $name, \PDO::PARAM_STR);
+        $result->bindParam(':EmailForm', $emailFrom, \PDO::PARAM_STR);
+        $result->bindParam(':Message', $comments, \PDO::PARAM_STR);
+        $result->bindParam(':date', $dateNaw, \PDO::PARAM_STR);
         return $result->execute();
     }
     
@@ -74,11 +68,11 @@ class Model {
     		VALUES (:firstName, :lastName, :email, :usersex, :date)";
         // Получение и возврат результатов. Используется подготовленный запрос
         $result = $db->prepare($sql);
-        $result->bindParam(':firstName', $firstName, PDO::PARAM_STR);
-        $result->bindParam(':lastName', $lastName, PDO::PARAM_STR);
-        $result->bindParam(':email', $email, PDO::PARAM_STR);
-        $result->bindParam(':usersex', $usersex, PDO::PARAM_STR);
-        $result->bindParam(':date', $dateofbirth, PDO::PARAM_STR);
+        $result->bindParam(':firstName', $firstName, \PDO::PARAM_STR);
+        $result->bindParam(':lastName', $lastName, \PDO::PARAM_STR);
+        $result->bindParam(':email', $email, \PDO::PARAM_STR);
+        $result->bindParam(':usersex', $usersex, \PDO::PARAM_STR);
+        $result->bindParam(':date', $dateofbirth, \PDO::PARAM_STR);
         return $result->execute();
     }
 
